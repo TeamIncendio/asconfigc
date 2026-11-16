@@ -1,5 +1,5 @@
 /*
-Copyright 2016-2025 Bowler Hat LLC
+Copyright 2016-2026 Bowler Hat LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,8 +68,17 @@ package com.as3mxml.asconfigc.utils
 			{
 				var fileName:String = files[j];
 				var fullPath:String = path.resolve(sourcePath, fileName);
+				if(excludes && excludes.indexOf(fullPath) !== -1)
+				{
+					continue;
+				}
 				if(fs.statSync(fullPath).isDirectory())
 				{
+					if (SOURCE_CONTROL_DIRECTORY_NAMES.indexOf(path.basename(fullPath)) !== -1) {
+						// we accept most types of files, including hidden ones,
+						// but it's a bad idea to copy source control directories
+						continue;
+					}
 					//add this directory to the source paths
 					sourcePaths.push(fullPath);
 					sourcePathsCount++;
@@ -81,13 +90,14 @@ package com.as3mxml.asconfigc.utils
 					// don't copy source files; only assets
 					continue;
 				}
-				if(excludes && excludes.indexOf(fullPath) !== -1)
-				{
-					continue;
-				}
 				if(fileName.startsWith("._") || fileName === ".DS_Store")
 				{
 					// macOS system files that can be ignored
+					continue;
+				}
+				if(fileName === "Thumbs.db")
+				{
+					// windows system files that can be ignored
 					continue;
 				}
 				result.add(fullPath);
@@ -96,3 +106,5 @@ package com.as3mxml.asconfigc.utils
 		return Array.from(result);
 	}
 }
+
+const SOURCE_CONTROL_DIRECTORY_NAMES:Array = [".git", ".svn", ".hg", ".jj"];

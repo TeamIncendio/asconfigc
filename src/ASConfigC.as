@@ -1,5 +1,5 @@
 /*
-Copyright 2016-2025 Bowler Hat LLC
+Copyright 2016-2026 Bowler Hat LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -1526,6 +1526,7 @@ package
 			}
 			var outputDirectory:String = findOutputDirectory(this._mainFile, this._outputPathForTarget, !this._outputIsJS);
 			var excludes:Vector.<String> = new <String>[];
+			excludes.push(outputDirectory);
 			if(this._airDescriptors)
 			{
 				var descriptorCount:int = this._airDescriptors.length;

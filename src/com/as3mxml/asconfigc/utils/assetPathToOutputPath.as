@@ -1,5 +1,5 @@
 /*
-Copyright 2016-2025 Bowler Hat LLC
+Copyright 2016-2026 Bowler Hat LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ package com.as3mxml.asconfigc.utils
 			var sourcePath:String = sourcePaths[i];
 			//get the absolute path for each of the source paths
 			sourcePath = path.resolve(sourcePath);
-			if(assetPath.startsWith(sourcePath))
+			if(assetPath.startsWith(sourcePath + path.sep))
 			{
 				relativePath = path.relative(sourcePath, assetPath);
 				break;
